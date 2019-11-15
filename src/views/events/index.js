@@ -34,14 +34,33 @@ class Event extends React.Component {
     })
     .then(res => res.json())
     .then(data => {
-      this.setState({ events: data.events })
-      console.log(this.state.events);
+      console.log(data);
+
+      if (data.events) {
+        let events = data.events;
+
+        events.sort(function(a, b) {
+          return a.day - b.day
+        });
+
+        events.sort(function(a, b) {
+          return a.month - b.month
+        });
+
+        this.setState({ events })
+
+      } else {
+        alert(`${data.message}`);
+      }
       })
     .catch(err => alert(err));
   }
 
 
-  deleteEvent = event_id => {
+  deleteEvent = async(event_id) => {
+    if (!window.confirm('Are you sure you want to delete this event?')) {
+      return;
+    }
 
     const URL = `https://event-scheduler-backend.herokuapp.com/api/delete`
 
@@ -53,19 +72,34 @@ class Event extends React.Component {
       }
     })
     .then(res => res.json())
-    .then(data => alert(`${data.message}`))
+    .then(data => {
+      console.log(data);
+
+      if (data.code === 200) {
+        let events = this.state.events;
+        let results = events.filter(event => event.event_id !== event_id);
+        this.setState({ events : results });
+      }
+    })
     .catch(err => alert(err));
   }
 
   render(){
     return (
-      <div className="row Event">
-        <div className="col-md-8 offset-md-2">
-          <h1>Events</h1>
-          <EventsForm getEvent={this.getEvent} />
-          { this.state.events &&
-            <EventsTable deleteEvent={this.deleteEvent} events={this.state.events} />
-          }
+      <div className="Events">
+        <div className="row">
+          <div className="col-md-6 offset-md-3">
+            <h1>Events</h1>
+            <EventsForm getEvent={this.getEvent} />
+          </div>
+        </div>
+
+        <div className="row">
+          <div className="col-md-8 offset-md-2">
+            { this.state.events &&
+              <EventsTable deleteEvent={this.deleteEvent} events={this.state.events} />
+            }
+          </div>
         </div>
       </div>
     );

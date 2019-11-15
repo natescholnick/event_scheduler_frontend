@@ -9,8 +9,8 @@ const EventsTable = (props) =>
         <tr>
           <th scope="col">Title</th>
           <th scope="col">Date</th>
-          <th scope="col">Notes</th>
-          <th scope="col">Delete Event</th>
+          <th scope="col" colSpan="2">Notes</th>
+          <th scope="col" className="del-column">Delete Event</th>
         </tr>
       </thead>
       <tbody>
@@ -24,9 +24,9 @@ const EventsTable = (props) =>
         }) =>
           <tr key={event_id}>
             <td>{title}</td>
-            <td>{month}/{day}/{year}</td>
+            <td colSpan="2">{month}/{day}/{year}</td>
             <td>{notes}</td>
-            <td>
+            <td className="del-column">
               <button className="btn btn-danger" onClick={() => props.deleteEvent(event_id)}>Delete</button>
             </td>
           </tr>

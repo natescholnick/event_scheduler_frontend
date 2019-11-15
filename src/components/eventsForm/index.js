@@ -4,7 +4,7 @@ import './index.css'
 
 function EventsForm(props) {
   return (
-    <form className="ScheduleForm" onSubmit={props.getEvent}>
+    <form className="EventsForm" onSubmit={props.getEvent}>
 
       <div className="form-group">
         <label>Day</label>
