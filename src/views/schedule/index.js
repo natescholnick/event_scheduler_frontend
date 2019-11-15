@@ -1,6 +1,7 @@
 import React from 'react';
-import './App.css';
-import ScheduleForm from '../../componenets/scheduleForm';
+import '../../App.css';
+import './index.css'
+import ScheduleForm from '../../components/scheduleForm';
 
 class Schedule extends React.Component {
   saveEvent = async(e) => {
@@ -32,7 +33,7 @@ class Schedule extends React.Component {
 
   render(){
     return (
-      <div classname="row Schedule">
+      <div className="row Schedule">
         <div className="col-md-6 offset-md-3">
           <h1>Schedule an Event</h1>
           <ScheduleForm saveEvent={this.saveEvent} />
